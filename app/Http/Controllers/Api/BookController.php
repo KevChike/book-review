@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Contracts\Repositories\BookRepositoryInterface as BookRepository;
 
 class BookController extends Controller
 {
@@ -13,9 +14,9 @@ class BookController extends Controller
      *
      * @return void
      */
-	public function __construct(Book $book)
+	public function __construct(BookRepository $bookRepository)
 	{
-		$this->book = $book;
+		$this->bookRepository = $bookRepository;
 	}
 
 	/**
@@ -25,8 +26,8 @@ class BookController extends Controller
      */
     public function index()
     {
-    	$books = $this->book->all();
-    	
+    	$books = $this->bookRepository->all();
+
     	return response()->json([
     		'status' => 'success',
             'code' => 200,
