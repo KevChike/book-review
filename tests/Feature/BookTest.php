@@ -103,4 +103,34 @@ class BookTest extends TestCase
         $response->assertStatus(401);
     }
 
+    /** @test */
+    public function authenticated_user_can_access_delete_book_api()
+    {
+        $user = factory(\App\User::class)->create();
+        $this->actingAs($user, 'api');
+        $book = factory(\App\Models\Book::class)->create();
+        $response = $this->json('DELETE', route('api.books.destroy', $book->id));
+        $this->assertDatabaseMissing($this->tableName, [
+            'id' => $book->id
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+        ]);
+    }
+
+    /** @test */
+    public function unauthenticated_user_cannot_access_delete_book_api()
+    {
+        $this->withExceptionHandling();
+        $book = factory(\App\Models\Book::class)->create();
+        $response = $this->json('DELETE', route('api.books.destroy', $book->id));
+        $this->assertDatabaseHas($this->tableName, [
+            'id' => $book->id,
+            'isbn' => $book->isbn
+        ]);
+        $response->assertStatus(401);
+    }
 }

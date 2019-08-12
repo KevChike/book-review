@@ -65,4 +65,21 @@ class BookController extends Controller
         ], 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->bookRepository->delete($id);
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Deleted successfully'
+        ], 200);
+    }
 }
