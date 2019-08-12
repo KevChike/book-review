@@ -45,4 +45,24 @@ class BookController extends Controller
         
         return new BookResource($book);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $this->bookRepository->update($id, $request->toArray());
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Updated successfully'
+        ], 200);
+    }
+
 }

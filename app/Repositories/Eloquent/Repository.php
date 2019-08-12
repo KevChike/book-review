@@ -28,7 +28,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @var string
      */
-    protected $defaultAttribute = 'uid';
+    protected $defaultAttribute = 'id';
 
     public function __construct(App $app)
     {
