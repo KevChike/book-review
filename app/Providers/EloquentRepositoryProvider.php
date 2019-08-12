@@ -16,8 +16,8 @@ class EloquentRepositoryProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(
-            'App\Contracts\Repositories\BookRepositoryInterface', 
-            'App\Repositories\Eloquent\BookRepository'
+            \App\Contracts\Repositories\BookRepositoryInterface::class, 
+            \App\Repositories\Eloquent\BookRepository::class
         ); 
     }
 

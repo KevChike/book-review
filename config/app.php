@@ -174,12 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        /*
-         * Personal Service Providers...
-         */
-        App\Providers\EloquentRepositoryProvider::class,
-
     ],
 
     /*
