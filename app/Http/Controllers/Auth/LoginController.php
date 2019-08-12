@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except(['logout', 'apiLogout']);
+        $this->middleware('guest')->except(['logout', 'apiLogout', 'loggedInUser']);
     }
 
     /**
@@ -88,5 +88,15 @@ class LoginController extends Controller
             'title' => 'OK',
             'message' => 'Successfully logged out.'
         ]);
+    }
+
+    /**
+     * Get the authenticated User
+     *
+     * @return array
+     */
+    public function loggedInUser(Request $request)
+    {
+        return response()->json($request->user());
     }
 }
