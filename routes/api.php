@@ -6,4 +6,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/books', 'Api\BookController@index')->name('api.books.index');
+Route::group(['prefix' => '/v1', 'namespace' => 'Api'], function () {
+	Route::get('/books', 'BookController@index')->name('api.books.index');
+
+});

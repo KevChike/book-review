@@ -14,12 +14,14 @@ class BookCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        'status' => 'success',
-        'code' => 200,
-        'title' => 'OK',
-        'message' => 'Done successfully',
-        'method' => request()->method(),
-        'url' => request()->fullUrl(),
-        'data' => BookResource::collection($this->collection)
+        return [
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Done successfully',
+            'method' => request()->method(),
+            'url' => request()->fullUrl(),
+            'data' => BookResource::collection($this->collection)
+        ];
     }
 }
