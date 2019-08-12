@@ -23,4 +23,9 @@ class Book extends Model
     protected $casts = [
         'publication_year' => 'year',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
