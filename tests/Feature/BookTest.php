@@ -27,4 +27,19 @@ class BookTest extends TestCase
             'publication_year' => $books->first()->publication_year,
         ]);
     }
+
+    /** @test */
+    public function authorized_user_can_access_create_book_api()
+    {
+        $user = factory(\App\User::class)->create();
+        $this->actingAs($user, 'api');
+        $book = factory(\App\Models\Book::class)->make();
+        $response = $this->json('POST', route('api.books.store'), $book->toArray());
+        $response->assertStatus(201);
+        $response->assertJsonFragment([
+            'status' => 'success',
+            'code' => 201,
+            'title' => 'Created',
+        ]);
+    }
 }
