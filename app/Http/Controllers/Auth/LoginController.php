@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,5 +37,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Login user through the API (Create access token)
+     *
+     * @param  \App\Http\Requests\ApiLoginRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function apiLogin(Request $request)
+    {
+        abort_if(!Auth::attempt($request->toArray()), 401);
+
+        $user = Auth::user();
+
+        $token = $user->createToken("BookRating");
+
+        $user['token'] = $token->accessToken;
+        $user['expires_at'] = $token->token->expires_at;
+        $user['token_type'] = 'Bearer';
+
+        array_except($user, ['id']);
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Login was successful.',
+            'data' => [$user]
+        ]);
     }
 }
