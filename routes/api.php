@@ -8,6 +8,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => '/v1/auth', 'namespace' => 'Auth'], function () {
 	Route::post('/login', 'LoginController@apiLogin')->name('api.login');
+	Route::get('/logout', 'LoginController@apiLogout')->name('api.logout')->middleware('auth:api');
 });
 
 Route::group(['prefix' => '/v1', 'namespace' => 'Api'], function () {

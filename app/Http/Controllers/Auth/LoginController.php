@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'apiLogout']);
     }
 
     /**
@@ -65,6 +65,28 @@ class LoginController extends Controller
             'title' => 'OK',
             'message' => 'Login was successful.',
             'data' => [$user]
+        ]);
+    }
+
+    /**
+     * Logout user through the API (Revoke the token)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    public function apiLogout(Request $request)
+    {
+        // Revoke authenticated user's token.
+        $request->user()->token()->revoke();
+
+        // Delete the token from the database after revoking.
+        $request->user()->token()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Successfully logged out.'
         ]);
     }
 }
