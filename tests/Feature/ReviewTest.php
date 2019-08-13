@@ -12,12 +12,11 @@ class ReviewTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function authenticated_user_can_write_review()
+    public function authenticated_user_can_access_create_review_api()
     {
         $user = factory(\App\User::class)->create();
         $this->actingAs($user, 'api');
         $review = factory(\App\Models\Review::class)->create();
-        // dd($review);
         $response = $this->json('POST', route('api.reviews.store'), $review->toArray());
         $response->assertStatus(201);
         $response->assertJsonFragment([
@@ -29,5 +28,14 @@ class ReviewTest extends TestCase
             'content' => $review->content,
             'rating' => $review->rating,
         ]);
+    }
+
+    /** @test */
+    public function unauthenticated_user_cannot_access_create_review_api()
+    {
+        $this->withExceptionHandling();
+        $review = factory(\App\Models\Review::class)->create();
+        $response = $this->json('POST', route('api.reviews.store'), $review->toArray());
+        $response->assertStatus(401);
     }
 }
