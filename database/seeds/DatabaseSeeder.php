@@ -13,6 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UserTableSeeder::class);
         // $this->call(BookTableSeeder::class);
-        $this->call(ReviewTableSeeder::class);
+        // $this->call(ReviewTableSeeder::class);
     }
 }

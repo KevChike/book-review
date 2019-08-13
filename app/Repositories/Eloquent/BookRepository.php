@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use DB;
 use App\Contracts\Repositories\BookRepositoryInterface;
 
 class BookRepository extends Repository implements BookRepositoryInterface
@@ -14,5 +15,18 @@ class BookRepository extends Repository implements BookRepositoryInterface
     public function model()
     {
         return 'App\Models\Book';
+    }
+
+    /**
+     * Fetch all record from database with the option of filtering the columns
+     *
+     * @param  array $columns
+     * @return mixed
+     */
+    public function all(array $columns = array('*'))
+    {
+    	return $this->model->latest()
+    				->with(['reviews:rating,book_id'])
+    				->get($columns);
     }
 }

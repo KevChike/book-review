@@ -24,6 +24,7 @@ class BookResource extends JsonResource
             'publication_year' => $this->publication_year,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'average_rating' => !is_null($this->reviews) ? $this->reviews->avg('rating') : 0,
         ];
     }
 
