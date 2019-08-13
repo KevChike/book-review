@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\ReviewResource;
 use App\Http\Controllers\Controller;
 use App\Contracts\Repositories\ReviewRepositoryInterface as ReviewRepository;
 
@@ -29,14 +30,6 @@ class ReviewController extends Controller
     {
     	$review = $this->reviewRepository->create($request->toArray());
 
-    	return response()->json([
-    		'status' => 'success',
-            'code' => 201,
-            'title' => 'Created',
-            'message' => 'Done successfully',
-            'method' => request()->method(),
-            'url' => request()->fullUrl(),
-            'data' => $review
-    	], 201);
+    	return new ReviewResource($review);
     }
 }
