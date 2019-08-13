@@ -19,6 +19,11 @@ class EloquentRepositoryProvider extends ServiceProvider
             \App\Contracts\Repositories\BookRepositoryInterface::class, 
             \App\Repositories\Eloquent\BookRepository::class
         ); 
+
+        $this->app->singleton(
+            \App\Contracts\Repositories\ReviewRepositoryInterface::class, 
+            \App\Repositories\Eloquent\ReviewRepository::class
+        ); 
     }
 
     /**

@@ -17,4 +17,6 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api'], function () {
 	Route::post('/books', 'BookController@store')->name('api.books.store');
 	Route::put('/books/{id}', 'BookController@update')->name('api.books.update');
 	Route::delete('/books/{id}', 'BookController@destroy')->name('api.books.destroy');
+
+	Route::post('/reviews', 'ReviewController@store')->name('api.reviews.store');
 });
