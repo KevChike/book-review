@@ -1,0 +1,775 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Book Review API Documentation",
+      "description": "A book review api that displays list of books and their average rating.",
+      "termsOfService": "#",
+      "contact": {
+        "email": "kevchike@gmail.com",
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://books-review-api.herokuapp.com/api/v1"
+      }
+    ],
+    "tags": [
+      {
+        "name": "auth",
+        "description": "Authentication"
+      },
+      {
+        "name": "book",
+        "description": "Books endpoints"
+      },
+      {
+        "name": "review",
+        "description": "Book review endpoints"
+      }
+    ],
+    "paths": {
+        "/auth/login": {
+          "post": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Login with your credentials",
+            "description": "This endpoint logs in a user who has valid credentials.",
+            "requestBody": {
+              "description": "Object that needs to be added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserLoginRequest"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+                "200":{
+                    "description":"Successful operation.",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "status":{
+                                        "type":"string",
+                                        "example":"success"
+                                    },
+                                    "code":{
+                                        "type":"integer",
+                                        "example":200
+                                    },
+                                    "title":{
+                                        "type":"string",
+                                        "example":"OK"
+                                    },
+                                    "message":{
+                                        "type":"string",
+                                        "example":"Login was successful."
+                                    },
+                                    "data":{
+                                        "$ref":"#/components/schemas/UserLoginResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                "description": "User not authorized",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                           "$ref":"#/components/schemas/401"
+                        }
+                    }
+                }
+              }
+            }
+            
+          }
+        },
+        "/auth/user": {
+          "get": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Get a login user detail",
+            "description": "Returns the details of the logged in user.",
+            "responses": {
+              "200": {
+                "description": "Successful operation.",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref":"#/components/schemas/LoggedInUserResponse"
+                    }
+                  }
+                }
+              },
+              "401": {
+                "description": "User not authorized",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                           "$ref":"#/components/schemas/401"
+                        }
+                    }
+                }
+              },
+            },
+            "security":[
+              {
+                "bearerAuth":[]
+              }
+            ]
+          }
+        },
+        "/auth/logout":{
+          "get": {
+            "tags": [
+              "auth"
+            ],
+            "summary": "Logout a user from the app",
+            "description": "Logout user from the app and destroy the token.",
+            "responses": {
+                "200": {
+                    "description": "Successfully operation.",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "status":{
+                                        "type":"string",
+                                        "example":"success"
+                                    },
+                                    "code":{
+                                        "type":"integer",
+                                        "example":200
+                                    },
+                                    "title":{
+                                        "type":"string",
+                                        "example":"OK"
+                                    },
+                                    "message":{
+                                        "type":"string",
+                                        "example":"Successfully logged out."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  },
+                "400": {
+                    "description": "Invalid user supplied",
+                    "content": {}
+                }
+            },
+            "security":[
+              {
+                "bearerAuth":[]
+              }
+            ]
+          }
+        },
+
+
+
+
+
+
+
+        
+        "/books": {
+            "post": {
+                "tags": [
+                  "book"
+                ],
+                "summary": "Create book.",
+                "description": "This endpoint gives an authenticated user the ability to create a new book.",
+                "requestBody": {
+                  "description": "Object that needs to be added",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/StoreBookRequest"
+                      }
+                    }
+                  },
+                  "required": true
+                },
+                "responses": {
+                  "201":{
+                        "description":"Successful operation.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "status":{
+                                            "type":"string",
+                                            "example":"success"
+                                        },
+                                        "code":{
+                                            "type":"integer",
+                                            "example":201
+                                        },
+                                        "title":{
+                                            "type":"string",
+                                            "example":"Created"
+                                        },
+                                        "message":{
+                                            "type":"string",
+                                            "example":"Created successfully."
+                                        },
+                                        "method":{
+                                            "type":"string",
+                                            "example":"POST"
+                                        },
+                                        "url":{
+                                            "type":"string",
+                                            "example":"http://books-review-api.herokuapp.com/api/v1/books"
+                                        },
+                                        "data":{
+                                            "$ref":"#/components/schemas/StoreBookResponse"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                  "401": {
+                    "description": "User not authorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/401"
+                            }
+                        }
+                    }
+                  },
+                  "404": {
+                    "description": "Resource not found",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/404"
+                            }
+                        }
+                    }
+                  }
+                },
+                "security":[
+                  {
+                    "bearerAuth":[]
+                  }
+                ]
+            },
+            "get": {
+                "tags": [
+                  "book"
+                ],
+                "summary": "Get all books and their average",
+                "description": "This endpoint returns all available books and their average rating. This endpoint can be accessed by authenticated and unauthenticated users.",
+                "responses": {
+                  "200":{
+                        "description":"Successful operation.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "status":{
+                                            "type":"string",
+                                            "example":"success"
+                                        },
+                                        "code":{
+                                            "type":"integer",
+                                            "example":200
+                                        },
+                                        "title":{
+                                            "type":"string",
+                                            "example":"OK"
+                                        },
+                                        "message":{
+                                            "type":"string",
+                                            "example":"Done successfully."
+                                        },
+                                        "method":{
+                                            "type":"string",
+                                            "example":"GET"
+                                        },
+                                        "url":{
+                                            "type":"string",
+                                            "example":"http://books-review-api.herokuapp.com/api/v1/books"
+                                        },
+                                        "data":{
+                                            "$ref":"#/components/schemas/GetBooksResponse",
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+
+        "/books/{id}": {
+            "put": {
+                "tags": [
+                  "book"
+                ],
+                "summary": "Update book.",
+                "description": "This endpoint gives an authenticated user the ability to update a book.",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"ID of the book to be updated",
+                        "required":true,
+                        "example": 2,
+                        "schema":{
+                            "type":"integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                  "description": "Object that needs to be added",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/UpdateBookRequest"
+                      }
+                    }
+                  },
+                  "required": true
+                },
+                "responses": {
+                  "200":{
+                        "description":"Successful operation.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "status":{
+                                            "type":"string",
+                                            "example":"success"
+                                        },
+                                        "code":{
+                                            "type":"integer",
+                                            "example":200
+                                        },
+                                        "title":{
+                                            "type":"string",
+                                            "example":"OK"
+                                        },
+                                        "message":{
+                                            "type":"string",
+                                            "example":"Updated successfully."
+                                        },
+                                        "method":{
+                                            "type":"string",
+                                            "example":"PUT"
+                                        },
+                                        "url":{
+                                            "type":"string",
+                                            "example":"http://books-review-api.herokuapp.com/api/v1/books/{id}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                  "401": {
+                    "description": "User not authorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/401"
+                            }
+                        }
+                    }
+                  },
+                  "404": {
+                    "description": "Resource not found",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/404"
+                            }
+                        }
+                    }
+                  }
+                },
+                "security":[
+                  {
+                    "bearerAuth":[]
+                  }
+                ]
+            },
+            "delete": {
+                "tags": [
+                  "book"
+                ],
+                "summary": "Delete book",
+                "description": "This endpoint allows ONLY authenticated users to delete book.",
+                "parameters":[
+                    {
+                        "name":"id",
+                        "in":"path",
+                        "description":"ID of the book to be deleted",
+                        "required":true,
+                        "example": 2,
+                        "schema":{
+                            "type":"integer"
+                        }
+                    }
+                ],
+                "responses": {
+                  "200":{
+                        "description":"Successful operation.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "properties":{
+                                        "status":{
+                                            "type":"string",
+                                            "example":"success"
+                                        },
+                                        "code":{
+                                            "type":"integer",
+                                            "example":200
+                                        },
+                                        "title":{
+                                            "type":"string",
+                                            "example":"OK"
+                                        },
+                                        "message":{
+                                            "type":"string",
+                                            "example":"Deleted successfully."
+                                        },
+                                        "method":{
+                                            "type":"string",
+                                            "example":"DELETE"
+                                        },
+                                        "url":{
+                                            "type":"string",
+                                            "example":"http://books-review-api.herokuapp.com/api/v1/books/{id}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                    "description": "User not authorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/401"
+                            }
+                        }
+                    }
+                  },
+                  "404": {
+                    "description": "Resource not found",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                               "$ref":"#/components/schemas/404"
+                            }
+                        }
+                    }
+                  }
+                },
+                "security":[
+                  {
+                    "bearerAuth":[]
+                  }
+                ]
+            }
+        },
+
+        
+    },
+
+
+
+
+
+    "components": {
+        "schemas": {
+          "UserLoginRequest": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "example": "kevchike@gmail.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "password"
+              }
+            }
+          },
+          "UserLoginResponse": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "email_verified_at": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              },
+              "expires_at": {
+                "type": "string"
+              },
+              "token_type":{
+                  "type":"string"
+              }
+            }
+          },          
+          "LoggedInUserResponse": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "email_verified_at": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              }
+            }
+          },
+          "StoreBookRequest": {
+            "type": "object",
+            "properties": {
+              "isbn": {
+                "type": "string",
+                "example": "9789092757139"
+              },
+              "title": {
+                "type": "string",
+                "example": "The New Book"
+              },
+              "author": {
+                "type": "string",
+                "example": "John Doe"
+              },
+              "edition": {
+                "type": "string",
+                "example": "2"
+              },
+              "summary": {
+                "type": "string",
+                "example": "Est qui qui officiis fugiat. Optio et ex mollitia aut corporis praesentium quisquam. Quas in consectetur ut ipsa enim ut asperiores. Itaque laboriosam qui illum minima. Asperiores magnam quas voluptate. Qui et ut ut minima rerum."
+              },
+              "publication_year": {
+                "type": "string",
+                "example": 2003
+              }
+            }
+          },
+          "StoreBookResponse": {
+            "type": "object",
+            "properties": {
+              "isbn": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "edition": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "publication_year": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              }
+            }
+          },
+
+          "UpdateBookRequest": {
+            "type": "object",
+            "properties": {
+              "isbn": {
+                "type": "string",
+                "example": "9789092757139"
+              },
+              "title": {
+                "type": "string",
+                "example": "The New Book Updated Edition"
+              },
+              "author": {
+                "type": "string",
+                "example": "John Doe"
+              },
+              "edition": {
+                "type": "string",
+                "example": "3"
+              },
+              "summary": {
+                "type": "string",
+                "example": "The new Edition. Est qui qui officiis fugiat. Optio et ex mollitia aut corporis praesentium quisquam. Quas in consectetur ut ipsa enim ut asperiores. Itaque laboriosam qui illum minima. Asperiores magnam quas voluptate. Qui et ut ut minima rerum."
+              },
+              "publication_year": {
+                "type": "string",
+                "example": 2005
+              }
+            }
+          },
+
+          "GetBooksResponse": {
+            "type": "object",
+            "properties": {
+              "isbn": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "edition": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "publication_year": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              },
+              "average_rating": {
+                "type": "string"
+              }
+            }
+          },
+          
+
+
+
+
+
+          
+          
+        
+          
+          
+          
+          
+          
+          
+          
+          "401":{
+            "type":"object",
+            "properties":{
+                "status":{
+                    "type":"string",
+                    "example":"error"
+                },
+                "code":{
+                    "type":"integer",
+                    "example":401
+                },
+                "title":{
+                    "type":"string",
+                    "example":"Unauthorized"
+                },
+                "message":{
+                    "type":"string",
+                    "example":"Unauthenticated"
+                },
+                "method":{
+                    "type":"string"
+                },
+                "url":{
+                    "type":"string"
+                }
+            }
+        },
+
+          "404":{
+            "type":"object",
+            "properties":{
+                "status":{
+                    "type":"string",
+                    "example":"error"
+                },
+                "code":{
+                    "type":"integer",
+                    "example":404
+                },
+                "title":{
+                    "type":"string",
+                    "example":"Not Found"
+                },
+                "message":{
+                    "type":"string",
+                    "example":"Resource not found."
+                },
+                "method":{
+                    "type":"string"
+                },
+                "url":{
+                    "type":"string"
+                }
+            }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+              "type": "http",
+              "scheme":"bearer",
+              "bearerFormat":"JWT" 
+            }
+        }
+    }
+}

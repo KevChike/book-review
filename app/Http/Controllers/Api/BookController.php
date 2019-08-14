@@ -61,7 +61,9 @@ class BookController extends Controller
             'status' => 'success',
             'code' => 200,
             'title' => 'OK',
-            'message' => 'Updated successfully'
+            'message' => 'Updated successfully',
+            'method' => request()->method(),
+            'url' => request()->fullUrl(),
         ], 200);
     }
 
@@ -79,7 +81,9 @@ class BookController extends Controller
             'status' => 'success',
             'code' => 200,
             'title' => 'OK',
-            'message' => 'Deleted successfully'
+            'message' => 'Deleted successfully',
+            'method' => request()->method(),
+            'url' => request()->fullUrl(),
         ], 200);
     }
 }
