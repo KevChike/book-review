@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\ReviewResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReviewRequest;
+use App\Http\Resources\ReviewResource;
 use App\Contracts\Repositories\ReviewRepositoryInterface as ReviewRepository;
 
 class ReviewController extends Controller
@@ -23,10 +24,10 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ReviewRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReviewRequest $request)
     {
     	$review = $this->reviewRepository->create($request->toArray());
 

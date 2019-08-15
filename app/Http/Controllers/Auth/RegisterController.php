@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -74,10 +75,10 @@ class RegisterController extends Controller
     /**
      * Create a new user instance on API.
      *
-     * @param  array  $request
-     * @return \App\User
+     * @param  \App\Http\Requests\RegisterRequest  $request
+     * @return array
      */
-    protected function apiRegister(Request $request)
+    protected function apiRegister(RegisterRequest $request)
     {
         $user = User::create([
             'name' => $request['name'],
@@ -87,8 +88,8 @@ class RegisterController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'code' => 200,
-            'title' => 'OK',
+            'code' => 201,
+            'title' => 'Created',
             'message' => 'Registration was successful.',
             'data' => $user
         ]);

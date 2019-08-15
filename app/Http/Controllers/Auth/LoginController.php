@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -42,10 +43,10 @@ class LoginController extends Controller
     /**
      * Login user through the API (Create access token)
      *
-     * @param  \App\Http\Requests\ApiLoginRequest  $request
+     * @param  \App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function apiLogin(Request $request)
+    public function apiLogin(LoginRequest $request)
     {
         abort_if(!Auth::attempt($request->toArray()), 401);
 
