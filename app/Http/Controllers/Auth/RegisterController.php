@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -67,6 +68,29 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    /**
+     * Create a new user instance on API.
+     *
+     * @param  array  $request
+     * @return \App\User
+     */
+    protected function apiRegister(Request $request)
+    {
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 200,
+            'title' => 'OK',
+            'message' => 'Registration was successful.',
+            'data' => [$user]
         ]);
     }
 }
