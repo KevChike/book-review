@@ -237,13 +237,13 @@
                         }
                     }
                 }
-              },
-              "security":[
+              }
+            },
+            "security":[
               {
                 "bearerAuth":[]
               }
             ]
-            }
             
           }
         },        
