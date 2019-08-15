@@ -90,7 +90,7 @@ class RegisterController extends Controller
             'code' => 200,
             'title' => 'OK',
             'message' => 'Registration was successful.',
-            'data' => [$user]
+            'data' => $user
         ]);
     }
 }
