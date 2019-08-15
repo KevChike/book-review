@@ -214,7 +214,7 @@
                                     },
                                     "title":{
                                         "type":"string",
-                                        "example":"OK"
+                                        "example":"Created"
                                     },
                                     "message":{
                                         "type":"string",
