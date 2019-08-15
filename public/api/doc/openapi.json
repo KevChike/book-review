@@ -179,14 +179,69 @@
             ]
           }
         },
-
-
-
-
-
-
-
-        
+        "/reviews": {
+          "post": {
+            "tags": [
+              "review"
+            ],
+            "summary": "Create review.",
+            "description": "This endpoint enables authenticated users to create a book review and also rate the book.",
+            "requestBody": {
+              "description": "Object that needs to be added",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/StoreReviewRequest"
+                  }
+                }
+              },
+              "required": true
+            },
+            "responses": {
+                "201":{
+                    "description":"Successful operation.",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "properties":{
+                                    "status":{
+                                        "type":"string",
+                                        "example":"success"
+                                    },
+                                    "code":{
+                                        "type":"integer",
+                                        "example":201
+                                    },
+                                    "title":{
+                                        "type":"string",
+                                        "example":"OK"
+                                    },
+                                    "message":{
+                                        "type":"string",
+                                        "example":"Created successful."
+                                    },
+                                    "data":{
+                                        "$ref":"#/components/schemas/StoreReviewResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401": {
+                "description": "User not authorized",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                           "$ref":"#/components/schemas/401"
+                        }
+                    }
+                }
+              }
+            }
+            
+          }
+        },        
         "/books": {
             "post": {
                 "tags": [
@@ -547,7 +602,56 @@
                   "type":"string"
               }
             }
-          },          
+          }, 
+
+          "StoreReviewRequest": {
+            "type": "object",
+            "properties": {
+              "book_id": {
+                "type": "integer",
+                "example": 2
+              },
+              "user_id": {
+                "type": "integer",
+                "example": 1
+              },
+              "rating": {
+                "type": "integer",
+                "example": 4
+              },
+              "content": {
+                "type": "string",
+                "example": "Great book"
+              }
+            }
+          },
+          "StoreReviewResponse": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "book_id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "rating": {
+                "type": "integer"
+              },
+              "content": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "string"
+              },
+              "updated_at": {
+                "type": "string"
+              }
+            }
+          }, 
+
           "LoggedInUserResponse": {
             "type": "object",
             "properties": {
